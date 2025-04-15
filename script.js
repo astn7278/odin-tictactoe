@@ -11,7 +11,9 @@ function gameBoard() {
             board[i][j] = '';
         }
     }
-    return board;
+    const getBoard = () => board;
+    return getBoard();
 }
 
-console.log(gameBoard());
+console.log(gameBoard.getBoard);
+
