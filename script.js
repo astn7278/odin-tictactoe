@@ -32,10 +32,10 @@ const createBoard = (function() {
                 console.log("Spot filled already");
                 return false;
             }
-
+            //returns true if empty
             return board[rw][col] === '';
         }
-        //places marker and switches players
+        //places marker, logs board, increments moves, switches players
         if (openSpace(column, row)){
             board[row][column] = currentPlayer;
             console.log("Marker added!");
