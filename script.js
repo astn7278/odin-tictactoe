@@ -1,6 +1,6 @@
 
 //Create gameboard and populate with empty cells
-function gameBoard() {
+const createBoard = (function() {
     const rows = 3;
     const columns = 3;
     const board = [];
@@ -11,9 +11,42 @@ function gameBoard() {
             board[i][j] = '';
         }
     }
-    const getBoard = () => board;
-    return getBoard();
-}
+    
+    //Creates and returns copy of board
+    const getBoard = () => board.map(row => [...row]);
+    //Starts new game
+    const newGame = function() {
+        let gameOver = false;
+        let currentPlayer = "X";
+        let moves = 0; 
+    }
+    
+    //checks for blank space within range,
+    const addMarker = (column, row) => {
+        const openSpace = (col, rw) => {
+            if (rw < 0 || rw >= board.length || col < 0 || col >= board[0].length) {
+                console.log("Marker not added!")
+                return false;
+            }            
+            return board[rw][col] === '';
+        }
 
-console.log(gameBoard.getBoard);
+        if (openSpace(column, row)){
+            board[row][column] = "X";
+            console.log("Marker added!")
+            console.log(createBoard.getBoard())
+        }
+    }
 
+    return {
+        getBoard, newGame, addMarker
+    };
+})(); //IIFE
+
+
+
+
+
+// const printBoard = (function() {
+//     console.log(createBoard.getBoard())
+// });
