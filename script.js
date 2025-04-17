@@ -46,7 +46,7 @@ const createBoard = (function() {
                 if (winCheck) {
                     winner = winCheck;
                     running = false;
-                    console.log('Player ${`winner`} wins!')
+                    console.log(`Player ${winner} wins!`);
                 } else if (moves === 9) {
                     running = false;
                     console.log("Draw game")
