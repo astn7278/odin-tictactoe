@@ -60,9 +60,7 @@ const createBoard = (function() {
 
                 }
             }
-
         } 
-
         
     const restartGame = () => {
         setBoard();
@@ -74,7 +72,7 @@ const createBoard = (function() {
     };
 
     return {
-        getBoard: () => board.map(row => [...row]), addMarker, restartGame
+        getBoard, addMarker, restartGame
     };
 })(); //IIFE
 
@@ -108,12 +106,10 @@ const checkWin = () => {
             return board[a[0]][a[1]];
         }
     }
-
     return null;
 };
 
-
-
+//test moves (X wins)
 move(0,0)
 move(0,2)
 move(1,0)
