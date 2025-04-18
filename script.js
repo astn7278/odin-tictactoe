@@ -5,13 +5,18 @@ const createBoard = (function() {
     const columns = 3;
     const board = [];
     
-    for (let i = 0; i < rows; i++) {
-        board[i] = [];
-        for (let j = 0; j < columns; j++) {
-            board[i][j] = '';
+    const setBoard = () => {
+        for (let i = 0; i < rows; i++) {
+            board[i] = [];
+            for (let j = 0; j < columns; j++) {
+                board[i][j] = '';
+            }
         }
-    }
-    
+    };
+
+    setBoard();
+   
+
     //Creates and returns copy of board
     const getBoard = () => board.map(row => [...row]);
     
@@ -58,9 +63,18 @@ const createBoard = (function() {
 
         } 
 
+        
+    const restartGame = () => {
+        setBoard();
+        running = true;
+        currentPlayer = "X";
+        moves = 0; 
+        console.log("Game reset!");
+        console.log(createBoard.getBoard())
+    };
 
     return {
-        getBoard, addMarker
+        getBoard: () => board.map(row => [...row]), addMarker, restartGame
     };
 })(); //IIFE
 
@@ -98,5 +112,12 @@ const checkWin = () => {
     return null;
 };
 
+
+
+move(0,0)
+move(0,2)
+move(1,0)
+move(2,1)
+move(2,0)
 
 
