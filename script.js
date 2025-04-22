@@ -16,7 +16,8 @@ const createBoard = (function() {
 
     setBoard();
    
-    const status = document.querySelector('#status')
+    const status = document.querySelector('#status');
+    const resetButton = document.querySelector('#reset-button');
 
     //Creates and returns copy of board
     const getBoard = () => board.map(row => [...row]);
@@ -58,6 +59,36 @@ const createBoard = (function() {
                 cell.textContent = board[row][column];
             })
             
+            //check for winning pattern
+            const checkWin = () => {
+                const board = createBoard.getBoard();
+                const lines = [
+                    // Rows
+                    [ [0,0], [0,1], [0,2] ],
+                    [ [1,0], [1,1], [1,2] ],
+                    [ [2,0], [2,1], [2,2] ],
+                    // Columns
+                    [ [0,0], [1,0], [2,0] ],
+                    [ [0,1], [1,1], [2,1] ],
+                    [ [0,2], [1,2], [2,2] ],
+                    // Diagonals
+                    [ [0,0], [1,1], [2,2] ],
+                    [ [0,2], [1,1], [2,0] ],
+                ];
+                //check for matches, return player letter if true otherwise false
+                for (let line of lines) {
+                    const [a, b, c] = line;
+                    if (
+                        board[a[0]][a[1]] &&
+                        board[a[0]][a[1]] === board[b[0]][b[1]] &&
+                        board[a[0]][a[1]] === board[c[0]][c[1]]
+                    ) {
+                        return board[a[0]][a[1]];
+                    }
+                }
+                return null;
+            };
+            
             const winCheck = checkWin();
                 if (winCheck) {
                     winner = winCheck;
@@ -67,6 +98,7 @@ const createBoard = (function() {
                 } else if (moves === 9) {
                     running = false;
                     console.log("Draw game");
+                    status.textContent = "Draw game"
                 } else {
                     currentPlayer = currentPlayer === "X" ? "O" : "X";
 
@@ -116,35 +148,6 @@ cellButtons.forEach((cell, index) => {
     })
 });
 
-//check for winning pattern
-const checkWin = () => {
-    const board = createBoard.getBoard();
-    const lines = [
-        // Rows
-        [ [0,0], [0,1], [0,2] ],
-        [ [1,0], [1,1], [1,2] ],
-        [ [2,0], [2,1], [2,2] ],
-        // Columns
-        [ [0,0], [1,0], [2,0] ],
-        [ [0,1], [1,1], [2,1] ],
-        [ [0,2], [1,2], [2,2] ],
-        // Diagonals
-        [ [0,0], [1,1], [2,2] ],
-        [ [0,2], [1,1], [2,0] ],
-    ];
-    //check for matches, return player letter if true otherwise false
-    for (let line of lines) {
-        const [a, b, c] = line;
-        if (
-            board[a[0]][a[1]] &&
-            board[a[0]][a[1]] === board[b[0]][b[1]] &&
-            board[a[0]][a[1]] === board[c[0]][c[1]]
-        ) {
-            return board[a[0]][a[1]];
-        }
-    }
-    return null;
-};
 
 //test moves (X wins)
 // move(0,0)
