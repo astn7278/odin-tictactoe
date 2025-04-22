@@ -41,11 +41,18 @@ const createBoard = (function() {
             return board[rw][col] === '';
         }
         //places marker, logs board, increments moves, switches players
-        if (openSpace(column, row)){
+        if (openSpace(column, row) && running){
             board[row][column] = currentPlayer;
             moves++;
             console.log("Marker added!");
             console.log(createBoard.getBoard());
+
+            const cellButtons = document.querySelectorAll('.cell');
+            cellButtons.forEach((cell, index) => {
+                const row = Math.floor(index / 3);
+                const column = index % 3;
+                cell.textContent = board[row][column];
+            })
             
             const winCheck = checkWin();
                 if (winCheck) {
@@ -54,30 +61,50 @@ const createBoard = (function() {
                     console.log(`Player ${winner} wins!`);
                 } else if (moves === 9) {
                     running = false;
-                    console.log("Draw game")
+                    console.log("Draw game");
                 } else {
                     currentPlayer = currentPlayer === "X" ? "O" : "X";
 
                 }
-            }
+            } else console.log('Game is already over')
         } 
         
-    const restartGame = () => {
-        setBoard();
-        running = true;
-        currentPlayer = "X";
-        moves = 0; 
-        console.log("Game reset!");
-        console.log(createBoard.getBoard())
-    };
+        const restartGame = () => {
+            setBoard();
+            running = true;
+            currentPlayer = "X";
+            moves = 0; 
+            console.log("Game reset!");
+            console.log(createBoard.getBoard());
+            const cellButtons = document.querySelectorAll('.cell');
+            cellButtons.forEach((cell) => {
+                cell.textContent = "";
+            })
+        };
+        
+        return {
+            getBoard, addMarker, restartGame
+        };
+    })(); //IIFE
 
-    return {
-        getBoard, addMarker, restartGame
-    };
-})(); //IIFE
-
+//Reset button
+const resetButton = document.querySelector("#reset-button");
+resetButton.addEventListener('click', () => {
+    createBoard.restartGame();
+  });
+   
 //move(x,y)
 const move = createBoard.addMarker;
+
+//Cell buttons
+const cellButtons = document.querySelectorAll('.cell');
+cellButtons.forEach((cell, index) => {
+    const row = Math.floor(index / 3);
+    const col = index % 3;
+    cell.addEventListener('click', () => {
+        move(col, row);
+    })
+});
 
 //check for winning pattern
 const checkWin = () => {
@@ -110,10 +137,10 @@ const checkWin = () => {
 };
 
 //test moves (X wins)
-move(0,0)
-move(0,2)
-move(1,0)
-move(2,1)
-move(2,0)
+// move(0,0)
+// move(0,2)
+// move(1,0)
+// move(2,1)
+// move(2,0)
 
 
