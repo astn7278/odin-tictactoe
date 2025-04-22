@@ -1,0 +1,26 @@
+.game {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color:aquamarine;
+    height: 500px;
+}
+
+.board {
+    display: flex;
+    justify-content: center;
+    background-color: brown;
+    height: 200px;
+}
+.cell {
+    width: 50px;
+    height: 50px;
+    background-color: blue;
+}
+
+#reset-button {
+    background-color: yellow;
+    height: 25px;
+
+}
