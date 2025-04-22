@@ -16,6 +16,7 @@ const createBoard = (function() {
 
     setBoard();
    
+    const status = document.querySelector('#status')
 
     //Creates and returns copy of board
     const getBoard = () => board.map(row => [...row]);
@@ -30,11 +31,13 @@ const createBoard = (function() {
         const openSpace = (col, rw) => {
             if (rw < 0 || rw >= board.length || col < 0 || col >= board[0].length) {
                 console.log("Invalid spot");
+                status.textContent = "Invalid spot";
                 return false;
             }
             
-            if (board[row][column] !== ''){
+            if (board[row][column] !== '' && running){
                 console.log("Spot filled already");
+                status.textContent = "Spot filled already";
                 return false;
             }
             //returns true if empty
@@ -45,6 +48,7 @@ const createBoard = (function() {
             board[row][column] = currentPlayer;
             moves++;
             console.log("Marker added!");
+            status.textContent = `Player ${currentPlayer} marker added!`
             console.log(createBoard.getBoard());
 
             const cellButtons = document.querySelectorAll('.cell');
@@ -59,6 +63,7 @@ const createBoard = (function() {
                     winner = winCheck;
                     running = false;
                     console.log(`Player ${winner} wins!`);
+                    status.textContent = `Player ${winner} wins!`
                 } else if (moves === 9) {
                     running = false;
                     console.log("Draw game");
@@ -66,7 +71,10 @@ const createBoard = (function() {
                     currentPlayer = currentPlayer === "X" ? "O" : "X";
 
                 }
-            } else console.log('Game is already over')
+            } else if (!running) {
+                console.log('Game is already over');
+                status.textContent = "Game is already over"
+            }
         } 
         
         const restartGame = () => {
@@ -75,6 +83,8 @@ const createBoard = (function() {
             currentPlayer = "X";
             moves = 0; 
             console.log("Game reset!");
+            status.textContent = "Game reset!"
+            
             console.log(createBoard.getBoard());
             const cellButtons = document.querySelectorAll('.cell');
             cellButtons.forEach((cell) => {
