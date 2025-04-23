@@ -1,6 +1,6 @@
 //Add names
 const player1 = (function() {
-    let name1 = ''
+    let name1 = 'X'
     const form = document.querySelector('#playerNameInput');
     const input = document.querySelector('#playerInput');
 
@@ -18,7 +18,7 @@ const player1 = (function() {
 })();
 
 const player2 = (function() {
-    let name2 = ''
+    let name2 = 'O'
     const form = document.querySelector('#playerNameInput2');
     const input = document.querySelector('#playerInput2');
 
