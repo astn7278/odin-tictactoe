@@ -1,3 +1,36 @@
+const player1 = (function() {
+    let name1 = ''
+    const form = document.querySelector('#playerNameInput');
+    const input = document.querySelector('#playerInput');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevent page refresh
+        name1 = input.value;
+        console.log('Submitted:', name1);
+    // Do something with the value, like send to server or display
+    });
+
+    return {
+        getName: () => name1
+    }
+})();
+
+const player2 = (function() {
+    let name2 = ''
+    const form = document.querySelector('#playerNameInput2');
+    const input = document.querySelector('#playerInput2');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevent page refresh
+        name2 = input.value;
+        console.log('Submitted:', name2);
+    // Do something with the value, like send to server or display
+    });
+
+    return {
+        getName: () => name2
+    }
+})();
 
 //Create gameboard and populate with empty cells
 const createBoard = (function() {
@@ -26,6 +59,9 @@ const createBoard = (function() {
     let currentPlayer = "X";
     let moves = 0; 
     
+    //Name getter
+    const getPlayerName = () => currentPlayer === "X" ? player1.getName() : player2.getName();
+
     
     //checks for blank space within range
     const addMarker = (column, row) => {
@@ -49,7 +85,7 @@ const createBoard = (function() {
             board[row][column] = currentPlayer;
             moves++;
             console.log("Marker added!");
-            status.textContent = `Player ${currentPlayer} marker added!`
+            status.textContent = `${getPlayerName()}'s marker added!`
             console.log(createBoard.getBoard());
 
             const cellButtons = document.querySelectorAll('.cell');
@@ -58,7 +94,7 @@ const createBoard = (function() {
                 const column = index % 3;
                 cell.textContent = board[row][column];
             })
-            
+
             //check for winning pattern
             const checkWin = () => {
                 const board = createBoard.getBoard();
@@ -94,14 +130,14 @@ const createBoard = (function() {
                     winner = winCheck;
                     running = false;
                     console.log(`Player ${winner} wins!`);
-                    status.textContent = `Player ${winner} wins!`
+                    console.log(`${getPlayerName()} wins!`);
+                    status.textContent = `${getPlayerName()} wins!`
                 } else if (moves === 9) {
                     running = false;
                     console.log("Draw game");
                     status.textContent = "Draw game"
                 } else {
                     currentPlayer = currentPlayer === "X" ? "O" : "X";
-
                 }
             } else if (!running) {
                 console.log('Game is already over');
@@ -147,7 +183,6 @@ cellButtons.forEach((cell, index) => {
         move(col, row);
     })
 });
-
 
 //test moves (X wins)
 // move(0,0)
