@@ -1,3 +1,4 @@
+//Add names
 const player1 = (function() {
     let name1 = ''
     const form = document.querySelector('#playerNameInput');
@@ -7,7 +8,8 @@ const player1 = (function() {
         e.preventDefault(); // Prevent page refresh
         name1 = input.value;
         console.log('Submitted:', name1);
-    // Do something with the value, like send to server or display
+        form.style.display = 'none';
+
     });
 
     return {
@@ -24,7 +26,7 @@ const player2 = (function() {
         e.preventDefault(); // Prevent page refresh
         name2 = input.value;
         console.log('Submitted:', name2);
-    // Do something with the value, like send to server or display
+        form.style.display = 'none';
     });
 
     return {
@@ -32,7 +34,7 @@ const player2 = (function() {
     }
 })();
 
-//Create gameboard and populate with empty cells
+//Create game board and populate with empty cells
 const createBoard = (function() {
     const rows = 3;
     const columns = 3;
@@ -84,8 +86,8 @@ const createBoard = (function() {
         if (openSpace(column, row) && running){
             board[row][column] = currentPlayer;
             moves++;
-            console.log("Marker added!");
             status.textContent = `${getPlayerName()}'s marker added!`
+            console.log("Marker added!");
             console.log(createBoard.getBoard());
 
             const cellButtons = document.querySelectorAll('.cell');
@@ -129,9 +131,8 @@ const createBoard = (function() {
                 if (winCheck) {
                     winner = winCheck;
                     running = false;
-                    console.log(`Player ${winner} wins!`);
-                    console.log(`${getPlayerName()} wins!`);
                     status.textContent = `${getPlayerName()} wins!`
+                    console.log(`Player ${winner} wins!`);
                 } else if (moves === 9) {
                     running = false;
                     console.log("Draw game");
@@ -140,8 +141,8 @@ const createBoard = (function() {
                     currentPlayer = currentPlayer === "X" ? "O" : "X";
                 }
             } else if (!running) {
-                console.log('Game is already over');
                 status.textContent = "Game is already over"
+                console.log('Game is already over');
             }
         } 
         
@@ -150,8 +151,8 @@ const createBoard = (function() {
             running = true;
             currentPlayer = "X";
             moves = 0; 
-            console.log("Game reset!");
             status.textContent = "Game reset!"
+            console.log("Game reset!");
             
             console.log(createBoard.getBoard());
             const cellButtons = document.querySelectorAll('.cell');

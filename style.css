@@ -50,3 +50,8 @@ html {
 #status {
     font-size: 5em;
 }
+
+.forms {
+    display: flex;
+    gap: 50px
+}
